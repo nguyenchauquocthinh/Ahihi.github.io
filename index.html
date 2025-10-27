@@ -1,183 +1,118 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Phiên chợ tình — Lời nhắn nhỏ</title>
-  <style>
-    :root{
-      --bg:#0b1020;
-      --card:#0f1724;
-      --accent:#ff6b81;
-      --muted:#9aa3b2;
-      --glass: rgba(255,255,255,0.03);
-    }
-    html,body{height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;}
-    body{
-      background: radial-gradient(1200px 600px at 10% 20%, rgba(255,107,129,0.06), transparent),
-                  radial-gradient(900px 450px at 90% 80%, rgba(102,126,234,0.04), transparent);
-      background-color:var(--bg);
-      display:flex;align-items:center;justify-content:center;padding:24px;color:#e6eef6;
-    }
-    .card{
-      width:100%;max-width:880px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border-radius:16px;padding:28px;box-shadow:0 8px 30px rgba(2,6,23,0.6);backdrop-filter: blur(6px);
-      display:grid;grid-template-columns: 1fr 360px;gap:20px;align-items:center;
-    }
-    @media (max-width:800px){ .card{grid-template-columns:1fr; padding:18px;} .controls{order:2} }
-    .left{
-      padding:12px;
-    }
-    .title{font-size:20px;margin:0;letter-spacing:0.2px}
-    .subtitle{color:var(--muted);margin-top:6px;font-size:14px}
-    .poster{
-      margin-top:18px;background:linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border-radius:12px;padding:18px;min-height:240px;display:flex;flex-direction:column;justify-content:center;align-items:center;
-      position:relative;overflow:hidden;
-    }
-    /* heart */
-    .heart{
-      width:120px;height:120px;position:relative;transform:scale(0.95);
-      transition:transform .25s cubic-bezier(.2,.9,.3,1);
-    }
-    .heart .shape{
-      position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-45deg);width:70%;height:70%;
-      background:var(--accent);border-radius:20px 20px 0 20px;box-shadow:0 8px 30px rgba(255,107,129,0.18);
-      animation: pulse 1.8s infinite;
-    }
-    .heart .shape::before, .heart .shape::after{
-      content:"";position:absolute;background:var(--accent);width:100%;height:100%;border-radius:50%;
-    }
-    .heart .shape::before{left:-50%;top:0}
-    .heart .shape::after{left:0;top:-50%}
-    @keyframes pulse{
-      0%{transform:scale(1)}
-      50%{transform:scale(1.07)}
-      100%{transform:scale(1)}
-    }
-    .typing{
-      margin-top:14px;font-size:18px;text-align:center;min-height:48px;line-height:1.25;
-    }
-    .cursor{display:inline-block;background:linear-gradient(180deg,#ffffff,#c9d8ff);width:8px;height:20px;margin-left:6px;border-radius:2px;vertical-align:middle;animation: blink 1s steps(2) infinite;}
-    @keyframes blink{50%{opacity:0}}
-    .controls{padding:12px;background:var(--glass);border-radius:12px;display:flex;flex-direction:column;gap:12px;align-items:center}
-    .info{color:var(--muted);font-size:13px;text-align:center}
-    .btns{display:flex;gap:10px;margin-top:6px}
-    button{padding:10px 14px;border-radius:10px;border:0;cursor:pointer;font-weight:600}
-    .btn-primary{background:linear-gradient(90deg,var(--accent),#ff8da4);color:white;box-shadow:0 6px 18px rgba(255,107,129,0.12)}
-    .btn-outline{background:transparent;border:1px solid rgba(255,255,255,0.06);color:#e6eef6}
-    .result{margin-top:10px;font-size:14px;min-height:36px}
-    /* confetti canvas on top */
-    #confettiCanvas{position:absolute;left:0;top:0;pointer-events:none;width:100%;height:100%;display:block;}
-    footer{margin-top:14px;color:var(--muted);font-size:12px;text-align:center}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lời mời cafe từ Thịnh 💌</title>
+<style>
+  body {
+    background: linear-gradient(135deg, #ffe6eb, #fff);
+    font-family: 'Segoe UI', sans-serif;
+    text-align: center;
+    padding: 30px;
+    overflow: hidden;
+  }
+  img {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 0 20px pink;
+    margin: 20px 0;
+  }
+  h1 {
+    color: #d63384;
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
+  #text {
+    color: #444;
+    font-size: 18px;
+    margin: 10px auto 25px;
+    width: 80%;
+    min-height: 60px;
+  }
+  .btn {
+    margin: 15px;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 25px;
+    font-size: 18px;
+    cursor: pointer;
+    color: white;
+    transition: 0.3s;
+  }
+  .yes {
+    background-color: #ff69b4;
+  }
+  .no {
+    background-color: #999;
+  }
+  .btn:hover {
+    transform: scale(1.1);
+  }
+</style>
 </head>
 <body>
-  <div class="card" role="main">
-    <div class="left">
-      <h1 class="title">Phiên chợ tình — Một lời nhắn nhỏ</h1>
-      <div class="subtitle">Mở nhẹ nhé — đây là món code tớ làm nhanh để gửi bạn.</div>
 
-      <div class="poster" id="poster">
-        <div class="heart" id="heart" aria-hidden="true">
-          <div class="shape"></div>
-        </div>
-        <div class="typing" id="typing" aria-live="polite"></div>
-        <canvas id="confettiCanvas"></canvas>
-      </div>
+<h1>Lời mời cafe từ Thịnh ☕💖</h1>
+<p id="text"></p>
 
-      <footer>Code nhỏ gọn — xem được trên GitHub Pages. Nếu muốn, tớ chỉnh lại lời nhắn riêng cho bạn nhé.</footer>
-    </div>
+<img src="hinh-ban-nu.jpg" alt="Ảnh dễ thương">
 
-    <aside class="controls">
-      <div class="info">Bạn có muốn đi uống cà phê cùng tớ không?</div>
-      <div class="btns" role="group" aria-label="phản hồi">
-        <button class="btn-primary" id="yesBtn">Đồng ý ☺️</button>
-        <button class="btn-outline" id="maybeBtn">Muốn tìm hiểu thêm</button>
-        <button class="btn-outline" id="noBtn">Chỉ làm bạn</button>
-      </div>
-      <div class="result" id="result"></div>
-      <div style="font-size:12px;color:var(--muted);text-align:center">Nếu thích, gửi link này kèm 1 câu hỏi vui.</div>
-    </aside>
-  </div>
+<br>
+<button class="btn yes" onclick="sendAnswer('Có ( Cho mình xin thời gian và địa điểm luôn hihi)')">Có 💕</button>
+<button class="btn no" onclick="sendAnswer('Không 😢')">Không 😭</button>
 
-  <script>
-    // typing text
-    const messages = [
-      "Chào bạn — tớ là Thịnh.",
-      "Tớ làm cái này nhỏ nhỏ để chào bạn.",
-      "Nếu bạn rảnh, tớ rất muốn mời bạn đi cà phê và nghe bạn kể về sở thích.",
-    ];
-    const typingEl = document.getElementById('typing');
-    let mi = 0, ci = 0;
-    function typeLoop(){
-      const text = messages[mi];
-      if(ci <= text.length){
-        typingEl.innerHTML = text.slice(0,ci) + '<span class="cursor"></span>';
-        ci++;
-        setTimeout(typeLoop, 60 + Math.random()*80);
-      } else {
-        // pause then next
-        setTimeout(()=>{
-          ci = 0; mi = (mi+1)%messages.length; typeLoop();
-        }, 1400);
-      }
+<script>
+const formURL = "https://docs.google.com/forms/d/1wWUrrG19e_XWD_o6hpsQTBF2bIf5fEvhKW3j9eqyvcY/viewform?edit_requested=true"; // 🔹 Thay link form của bạn
+const entryID = "entry.451808757"; // 🔹 Mã entry bạn đã tìm được
+
+// Hiệu ứng gõ chữ tán tỉnh 💬
+const messages = [
+  "Trời hôm nay lạ lắm…",
+  "Cà phê cũng đắng, mà lòng Thịnh thì ngọt 🍯",
+  "Không biết phải làm sao để mời bạn đi cùng cho đỡ cô đơn đây 🥺👉👈",
+  "Nên… cho Thịnh cơ hội hông nè? ☕💗"
+];
+let i = 0, j = 0, current = '', isDeleting = false;
+
+function typeWriter() {
+  const text = document.getElementById('text');
+  if (i < messages.length) {
+    if (!isDeleting && j < messages[i].length) {
+      current += messages[i][j++];
+      text.textContent = current;
+      setTimeout(typeWriter, 50);
+    } else if (isDeleting && j > 0) {
+      current = current.substring(0, j--);
+      text.textContent = current;
+      setTimeout(typeWriter, 25);
+    } else if (!isDeleting && j === messages[i].length) {
+      isDeleting = true;
+      setTimeout(typeWriter, 1500);
+    } else if (isDeleting && j === 0) {
+      isDeleting = false;
+      i++;
+      setTimeout(typeWriter, 500);
     }
-    typeLoop();
+  }
+}
+typeWriter();
 
-    // buttons
-    const result = document.getElementById('result');
-    const heart = document.getElementById('heart');
-    document.getElementById('yesBtn').addEventListener('click', ()=>{
-      heart.style.transform = 'scale(1.06)';
-      result.textContent = "Tuyệt quá! 😊 Tớ sẽ chủ động nhắn tin chọn ngày nhé.";
-      launchConfetti();
-    });
-    document.getElementById('maybeBtn').addEventListener('click', ()=>{
-      heart.style.transform = 'scale(1)';
-      result.textContent = "Không sao — tớ rất vui được nói chuyện thêm. Nói tớ biết sở thích của bạn nào!";
-    });
-    document.getElementById('noBtn').addEventListener('click', ()=>{
-      heart.style.transform = 'scale(0.95)';
-      result.textContent = "Cảm ơn bạn đã thẳng thắn — tớ vẫn rất trân trọng mối quan hệ bạn bè ❤️";
-    });
+// Gửi phản hồi lên form
+function sendAnswer(answer) {
+  const formData = new FormData();
+  formData.append(entryID, answer);
+  fetch(formURL, {
+    method: "POST",
+    mode: "no-cors",
+    body: formData
+  }).then(() => {
+    alert("💌 Cảm ơn bạn đã trả lời nhaaa 💖");
+  });
+}
+</script>
 
-    // small confetti (lightweight)
-    function launchConfetti(){
-      const canvas = document.getElementById('confettiCanvas');
-      const ctx = canvas.getContext('2d');
-      let W = canvas.width = canvas.offsetWidth;
-      let H = canvas.height = canvas.offsetHeight;
-      let particles = [];
-      for(let i=0;i<80;i++){
-        particles.push({
-          x: Math.random()*W,
-          y: Math.random()*-H,
-          r: 6*Math.random()+4,
-          d: Math.random()*40+10,
-          color: ['#ff6b81','#ffd166','#06d6a0','#4cc9f0'][Math.floor(Math.random()*4)],
-          tilt: Math.random()*10-10
-        });
-      }
-      let t=0;
-      function draw(){
-        ctx.clearRect(0,0,W,H);
-        for(let p of particles){
-          ctx.beginPath();
-          ctx.fillStyle=p.color;
-          ctx.fillRect(p.x, p.y, p.r, p.r*0.6);
-          p.x += Math.sin(t+p.d)*2 + p.tilt*0.1;
-          p.y += 2 + Math.cos(p.d)*0.5;
-          p.tilt += 0.02;
-          if(p.y>H+20){ p.y = -10; p.x = Math.random()*W; }
-        }
-        t += 0.02;
-        animation = requestAnimationFrame(draw);
-      }
-      let animation = requestAnimationFrame(draw);
-      setTimeout(()=>{ cancelAnimationFrame(animation); ctx.clearRect(0,0,W,H); }, 4000);
-      window.addEventListener('resize', ()=>{ W = canvas.width = canvas.offsetWidth; H = canvas.height = canvas.offsetHeight; });
-    }
-  </script>
 </body>
 </html>
