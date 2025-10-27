@@ -11,6 +11,7 @@
     text-align: center;
     padding: 30px;
     overflow: hidden;
+    position: relative;
   }
   img {
     width: 180px;
@@ -51,6 +52,17 @@
   .btn:hover {
     transform: scale(1.1);
   }
+  /* Tim bay */
+  .heart {
+    position: absolute;
+    color: #ff6fa5;
+    font-size: 20px;
+    animation: float 4s linear infinite;
+  }
+  @keyframes float {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-100vh); opacity: 0; }
+  }
 </style>
 </head>
 <body>
@@ -61,17 +73,18 @@
 <img src="hinh-ban-nu.jpg" alt="Ảnh dễ thương">
 
 <br>
-<button class="btn yes" onclick="sendAnswer('Có ( Cho mình xin thời gian và địa điểm luôn hihi)')">Có 💕</button>
-<button class="btn no" onclick="sendAnswer('Không 😢')">Không 😭</button>
+<button class="btn yes" onclick="sendAnswer('Có 💕 Cho mình xin thời gian và địa điểm luôn hihi!')">Có 💕</button>
+<button class="btn no" onclick="sendAnswer('Không 😢 Nhưng Thịnh vẫn chúc bạn một ngày dễ thương nha 💗')">Không 😭</button>
 
 <script>
-const formURL = "https://docs.google.com/forms/d/1wWUrrG19e_XWD_o6hpsQTBF2bIf5fEvhKW3j9eqyvcY/preview"; // 🔹 Thay link form của bạn
-const entryID = "entry.451808757"; // 🔹 Mã entry bạn đã tìm được
+// 🔹 Link form thật (thay preview bằng formResponse)
+const formURL = "https://docs.google.com/forms/d/e/1FAIpQLSfgGRrkBLCh2C9i7dqSWVSMEn2cO_s_dOGg-Af16EXkrhltqw/formResponse";
+const entryID = "entry.451808757";
 
-// Hiệu ứng gõ chữ tán tỉnh 💬
+// 💬 Tin nhắn gõ chữ
 const messages = [
-  "Trời hôm nay lạ lắm…",
-  "Cà phê cũng đắng, mà lòng Thịnh thì ngọt 🍯",
+  "Trời hôm nay lạ lắm… ☁️",
+  "Cà phê thì đắng, còn lòng Thịnh thì ngọt 🍯",
   "Không biết phải làm sao để mời bạn đi cùng cho đỡ cô đơn đây 🥺👉👈",
   "Nên… cho Thịnh cơ hội hông nè? ☕💗"
 ];
@@ -100,7 +113,7 @@ function typeWriter() {
 }
 typeWriter();
 
-// Gửi phản hồi lên form
+// 💌 Gửi phản hồi lên Google Form
 function sendAnswer(answer) {
   const formData = new FormData();
   formData.append(entryID, answer);
@@ -110,7 +123,21 @@ function sendAnswer(answer) {
     body: formData
   }).then(() => {
     alert("💌 Cảm ơn bạn đã trả lời nhaaa 💖");
+    createHearts();
   });
+}
+
+// 💕 Hiệu ứng tim bay
+function createHearts() {
+  for (let i = 0; i < 20; i++) {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "💖";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = 2 + Math.random() * 3 + "s";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 4000);
+  }
 }
 </script>
 
